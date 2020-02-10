@@ -6,7 +6,7 @@ const ProfileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
-    name: {
+    handle: {
         type: String,
         required: true,
         max: 40
@@ -17,27 +17,19 @@ const ProfileSchema = new Schema({
     bio: {
         type: String
     },
-    avatar: {
+    location: {
         type: String
     },
     status: {
         type: String,
         required: true
     },
-    private: [
-        {
-            email: {
-                type: String,
-                required: true
-            },
-            phoneno: {
-                type: BigInt,
-            },
-            gender: {
-                type:String
-            }
-        }
-    ],
+    phoneno: {
+        type: Number,
+    },
+    gender: {
+         type:String
+    },
     date: {
         type: Date,
         default: Date.now

@@ -6,14 +6,14 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'users'
     },
-    post: {
+    text: {
         type: String,
         required: true
     },
     name: {
         type: String,
     },
-    postuseravatar: {
+    avatar: {
         type: String
     }, 
     likes: [
@@ -33,6 +33,9 @@ const PostSchema = new Schema({
                 type: String,
                 required:  true
             },
+            name:{
+                type: String
+            },
             avatar:
             {
                 type: String
@@ -43,10 +46,13 @@ const PostSchema = new Schema({
             }
         }
     ],
+    hashtag: {
+        type: [String]
+    }, 
     date: {
         type: Date,
         default: Date.now
     },
 });
 
-module.exports = Post = mongoose.model('posts',PostSchema);
+module.exports = Post = mongoose.model('post',PostSchema);
