@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
-
+const path = require('path');
+const fileUpload = require('express-fileUpload');
+const app = express();
+app.use(fileUpload());
 //Post model
 const Post = require('../../models/Post');
 
@@ -32,13 +35,33 @@ router.get('/:id', (req,res) => {
     .catch(err => res.status(404).json({nopostfound : 'No posts found for that ID'}));
 });
 
+
+
 //@route POST api/posts
 //@desc Create post
 //@access private
-router.post('/', 
-    passport.authenticate('jwt', {session: false}),
-    (req,res) => {
-        const {errors, isValid} = validatePostInput(req.body);
+ router.post('/', 
+     passport.authenticate('jwt', {session: false}), 
+     (req,res) => {
+         const {errors, isValid} = validatePostInput(req.body);
+        
+        //Upload image to folder
+        //app.post('/api/posts/', (req, res) => {
+        const files = req.files.file;
+        if(req.files === null)
+        {
+            return res,status(400).json({msg: 'No file uploaded'});
+        }
+        
+      
+        file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
+            if(err){
+                console.error(err);
+                return res.status(500).send(err);
+            }
+            res.json({fileName: file.name, filePath: `/uploads/${file.name}`});
+        });
+    
 
         //Check validation
         if(!isValid)
@@ -48,7 +71,8 @@ router.post('/',
         //Create post               
         const newPost = {};
         newPost.user = req.user.id;
-        if(req.body.imageurl) newPost.imageurl = req.body.imageurl;
+        if(req.body.imageName) newPost.imageName = req.body.imageName;
+        
         if(req.body.name) newPost.name = req.body.name;
         if(req.body.avatar) newPost.avatar = req.body.avatar;
 

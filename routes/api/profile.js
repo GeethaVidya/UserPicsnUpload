@@ -72,7 +72,7 @@ router.get('/',
     //@access Public
     router.get('/user/user_id', (req, res) => {
         const error = {};
-        console.log(re.params.id);
+        console.log(req.params.id);
         Profile.findOne({user: req.params.user_id})
             .populate('user',['user','avatar'])
             .then(profile => {

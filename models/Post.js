@@ -8,11 +8,9 @@ const PostSchema = new Schema({
     },
     imageurl: {
         type: String,
-        required: true
+        default: 'none',
+        required:  true
     },
-    /*imagecaption:{
-        type: String
-    },*/
     name: { 
         type: String,
     },
